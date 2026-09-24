@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    <a href="/games/create" class="btn btn-success mb-3">🎮 Add Game</a>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
