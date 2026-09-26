@@ -44,10 +44,11 @@ public function store(Request $request)
 
     return redirect('/games')->with('success', 'Game added!');
 }
-    public function show(string $id)
-    {
-        //
-    }
+    public function show($id)
+{
+    $game = Game::find($id);
+    return view('show', compact('game'));
+}
 
     /**
      * Show the form for editing the specified resource.
@@ -85,4 +86,6 @@ public function update(Request $request, $id)
     $game->delete();
     return redirect('/games');
 }
+
+ 
 }

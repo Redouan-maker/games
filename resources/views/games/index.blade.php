@@ -14,6 +14,7 @@
                 <th>Rating</th>
                 <th>Edit</th>
                 <th>Delete</th>
+                <th>Show</th>
             </tr>
         </thead>
         <tbody>
@@ -35,6 +36,9 @@
                             <button onclick="return confirm('Weet je het zeker?')" class="btn btn-danger btn-sm" type="submit">Delete</button>
                         </form>
                     </td>
+                    <td>
+    <a href="/games/show/{{ $game->id }}" class="btn btn-info btn-sm">Show</a>
+</td>
                 </tr>
             @endforeach
 
