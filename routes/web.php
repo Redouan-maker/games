@@ -31,3 +31,20 @@ Route::middleware('auth')->group(function () {
 
 // Breeze authentication
 require __DIR__.'/auth.php';
+
+// Alleen ingelogde gebruikers mogen het dashboard zien
+Route::middleware('auth')->group(function () {
+    
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::get('/profiel', function () {
+        return view('profiel');
+    });
+
+});
+
+Route::get('/geheim', function () {
+    return view('geheim');
+})->middleware('auth');
