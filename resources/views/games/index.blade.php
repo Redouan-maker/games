@@ -3,7 +3,10 @@
 @section('title', '🎮 Game Collection')
 
 @section('content')
-    <a href="/games/create" class="btn btn-success mb-3">🎮 Add Game</a>
+    {{-- Add Game knop alleen zichtbaar voor admin --}}
+    @role('admin')
+        <a href="/games/create" class="btn btn-success mb-3">🎮 Add Game</a>
+    @endrole
 
     <table class="table">
         <thead class="thead-dark">
@@ -28,17 +31,23 @@
                     <td>{{ $game->platform }}</td>
                     <td>{{ $game->rating }}/10</td>
                     <td>
-                        <a href="/games/edit/{{ $game->id }}" class="btn btn-primary btn-sm">Edit</a>
+                        {{-- Edit knop alleen zichtbaar voor admin --}}
+                        @role('admin')
+                            <a href="/games/edit/{{ $game->id }}" class="btn btn-primary btn-sm">Edit</a>
+                        @endrole
                     </td>
                     <td>
-                        <form action="/games/destroy/{{ $game->id }}" method="post">
-                            @csrf
-                            <button onclick="return confirm('Weet je het zeker?')" class="btn btn-danger btn-sm" type="submit">Delete</button>
-                        </form>
+                        {{-- Delete knop alleen zichtbaar voor admin --}}
+                        @role('admin')
+                            <form action="/games/destroy/{{ $game->id }}" method="post">
+                                @csrf
+                                <button onclick="return confirm('Weet je het zeker?')" class="btn btn-danger btn-sm" type="submit">Delete</button>
+                            </form>
+                        @endrole
                     </td>
                     <td>
-    <a href="/games/show/{{ $game->id }}" class="btn btn-info btn-sm">Show</a>
-</td>
+                        <a href="/games/show/{{ $game->id }}" class="btn btn-info btn-sm">Show</a>
+                    </td>
                 </tr>
             @endforeach
 
@@ -46,6 +55,7 @@
             <tr>
                 <td colspan="3"><strong>Gemiddelde rating:</strong></td>
                 <td><strong>{{ count($games) > 0 ? number_format($sum / count($games), 1) : 0 }}/10</strong></td>
+                <td></td>
                 <td></td>
                 <td></td>
             </tr>
