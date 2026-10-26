@@ -15,18 +15,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Publieke route: iedereen mag de overzichtspagina en de details van een game bekijken
+// Publieke of voor iedereen toegankelijke game-routes (overzicht en details)
 Route::get('/games', [GameController::class, 'index'])->name('games.index');
 Route::get('/games/show/{id}', [GameController::class, 'show'])->name('games.show');
 
-// Beschermde routes: alleen toegankelijk voor ingelogde gebruikers (auth)
-Route::middleware('auth')->group(function () {
+// Beschermde Admin-routes (ALLEEN toegankelijk voor ingelogde admins)
+Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/games/create', [GameController::class, 'create'])->name('games.create');
     Route::post('/games/store', [GameController::class, 'store'])->name('games.store');
     Route::get('/games/edit/{id}', [GameController::class, 'edit'])->name('games.edit');
     Route::post('/games/update/{id}', [GameController::class, 'update'])->name('games.update');
     Route::post('/games/destroy/{id}', [GameController::class, 'destroy'])->name('games.destroy');
+});
 
+// Beschermde algemene ingelogde routes (zoals profiel)
+Route::middleware('auth')->group(function () {
     // Profile routes (Laravel Breeze)
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
