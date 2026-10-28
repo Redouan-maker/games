@@ -3,6 +3,10 @@
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\RolePermissionController;
+use App\Http\Controllers\Admin\UserRoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +53,13 @@ Route::middleware('auth')->group(function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('permissions', PermissionController::class);
+    Route::resource('roles', RoleController::class);
+    Route::resource('role-permissions', RolePermissionController::class);
+    Route::resource('user-roles', UserRoleController::class);
+});
 
 // Standaard Breeze authenticatie routes (login, register, logout, etc.)
 require __DIR__.'/auth.php';
